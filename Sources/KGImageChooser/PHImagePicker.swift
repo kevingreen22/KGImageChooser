@@ -14,6 +14,11 @@ public struct PHImagePicker: UIViewControllerRepresentable {
     @Binding var uiImage: UIImage?
     var completion: ()->()
     
+    public init(uiImage: Binding<UIImage?>, completion: @escaping () -> Void) {
+        _uiImage = uiImage
+        self.completion = completion
+    }
+    
     public func makeUIViewController(context: Context) -> PHPickerViewController {
         print("\n\(type(of: self)).\(#function)")
         var config = PHPickerConfiguration()

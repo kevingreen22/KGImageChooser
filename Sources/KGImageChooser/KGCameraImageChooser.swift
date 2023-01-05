@@ -12,6 +12,11 @@ public struct KGCameraImageChooser: View {
     @Binding var uiImage: UIImage?
     var completion: ()->()
     
+    public init(uiImage: Binding<UIImage?>, completion: @escaping () -> Void) {
+        _uiImage = uiImage
+        self.completion = completion
+    }
+    
     public var body: some View {
         TabView(selection: $selectedTab) {
             // FIRST TAB

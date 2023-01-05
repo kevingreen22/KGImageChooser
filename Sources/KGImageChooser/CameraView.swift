@@ -15,6 +15,11 @@ public struct CameraView: UIViewControllerRepresentable {
     var sourceType: UIImagePickerController.SourceType
     var completion: ()->()
 
+    public init(uiImage: Binding<UIImage?>, sourceType: UIImagePickerController.SourceType, completion: @escaping () -> Void) {
+        _uiImage = uiImage
+        self.sourceType = sourceType
+        self.completion = completion
+    }
     
     public func makeCoordinator() -> Coordinator { Coordinator(self) }
     
