@@ -9,12 +9,12 @@ import SwiftUI
 import PhotosUI
 
 @available(iOS 14, *)
-struct PHImagePicker: UIViewControllerRepresentable {
+public struct PHImagePicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
     @Binding var uiImage: UIImage?
     var completion: ()->()
     
-    func makeUIViewController(context: Context) -> PHPickerViewController {
+    public func makeUIViewController(context: Context) -> PHPickerViewController {
         print("\n\(type(of: self)).\(#function)")
         var config = PHPickerConfiguration()
         config.filter = .images
@@ -23,20 +23,20 @@ struct PHImagePicker: UIViewControllerRepresentable {
         return picker
     }
 
-    func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) { }
+    public func updateUIViewController(_ uiViewController: PHPickerViewController, context: Context) { }
     
-    func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> Coordinator {
         return PHImagePicker.Coordinator(self)
     }
     
-    class Coordinator: NSObject, PHPickerViewControllerDelegate {
+    public class Coordinator: NSObject, PHPickerViewControllerDelegate {
         var parent: PHImagePicker
         
-        init(_ parent: PHImagePicker) {
+        public init(_ parent: PHImagePicker) {
             self.parent = parent
         }
     
-        func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        public func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
             print("\n\(type(of: self)).\(#function)")
             let itemProviders = results.map(\.itemProvider)
             for item in itemProviders {
