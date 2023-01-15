@@ -24,7 +24,7 @@ public struct CameraView: UIViewControllerRepresentable {
     public func makeCoordinator() -> Coordinator { Coordinator(self) }
     
     public func makeUIViewController(context: Context) -> UIImagePickerController {
-        print("\(type(of: self)).\(#function)\n")
+        print("\(type(of: self)).\(#function)")
         let picker = UIImagePickerController()
         picker.sourceType = sourceType
         picker.delegate = context.coordinator
@@ -49,7 +49,7 @@ public struct CameraView: UIViewControllerRepresentable {
         }
         
         public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-            print("\(type(of: self)).\(#function)\n")
+            print("\(type(of: self)).\(#function)")
             if let uiimage = info[.originalImage] as? UIImage {
                 self.parent.uiImage = uiimage
             }
