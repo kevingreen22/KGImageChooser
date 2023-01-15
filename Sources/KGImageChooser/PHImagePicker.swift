@@ -20,7 +20,7 @@ public struct PHImagePicker: UIViewControllerRepresentable {
     }
     
     public func makeUIViewController(context: Context) -> PHPickerViewController {
-        print("\n\(type(of: self)).\(#function)")
+        print("\(type(of: self)).\(#function)")
         var config = PHPickerConfiguration()
         config.filter = .images
         let picker = PHPickerViewController(configuration: config)
@@ -42,7 +42,7 @@ public struct PHImagePicker: UIViewControllerRepresentable {
         }
     
         public func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-            print("\n\(type(of: self)).\(#function)")
+            print("\(type(of: self)).\(#function)")
             let itemProviders = results.map(\.itemProvider)
             for item in itemProviders {
                 // checking image can be loaded
