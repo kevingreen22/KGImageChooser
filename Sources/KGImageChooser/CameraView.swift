@@ -13,12 +13,12 @@ public struct CameraView: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
     @Binding var uiImage: UIImage?
     var sourceType: UIImagePickerController.SourceType
-    var completion: ()->()
+    var onDismiss: (()->Void)?
 
-    public init(uiImage: Binding<UIImage?>, sourceType: UIImagePickerController.SourceType, completion: @escaping () -> Void) {
+    public init(uiImage: Binding<UIImage?>, sourceType: UIImagePickerController.SourceType, onDismiss: (()->Void)? = nil) {
         _uiImage = uiImage
         self.sourceType = sourceType
-        self.completion = completion
+        self.onDismiss = onDismiss
     }
     
     public func makeCoordinator() -> Coordinator { Coordinator(self) }
@@ -53,7 +53,7 @@ public struct CameraView: UIViewControllerRepresentable {
             if let uiimage = info[.originalImage] as? UIImage {
                 self.parent.uiImage = uiimage
             }
-            self.parent.completion()
+            self.parent.onDismiss?()
             self.parent.presentationMode.wrappedValue.dismiss()
         }
     }

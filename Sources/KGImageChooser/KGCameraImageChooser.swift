@@ -10,24 +10,25 @@ public struct KGCameraImageChooser: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var selectedTab = 0
     @Binding var uiImage: UIImage?
-    var completion: ()->()
+    var onDismiss: (()->Void)?
     
-    public init(uiImage: Binding<UIImage?>, completion: @escaping () -> Void) {
+    
+    public init(uiImage: Binding<UIImage?>, onDismiss: (()->Void)? = nil) {
         _uiImage = uiImage
-        self.completion = completion
+        self.onDismiss = onDismiss
     }
     
     public var body: some View {
         TabView(selection: $selectedTab) {
             // FIRST TAB
             if #available(iOS 14, *) {
-                PHImagePicker(uiImage: $uiImage, completion: { completion() })
+                PHImagePicker(uiImage: $uiImage, onDismiss: { onDismiss?() })
                     .tabItem {
                         Label("Image", systemImage: "photo")
                     }
             } else {
                 // Fallback on earlier versions
-                CameraView(uiImage: $uiImage, sourceType: .photoLibrary, completion: { completion() } )
+                CameraView(uiImage: $uiImage, sourceType: .photoLibrary, onDismiss: { onDismiss?() } )
                     .tabItem {
                         HStack {
                             Image(systemName: "photo")
@@ -57,11 +58,11 @@ public struct KGCameraImageChooser: View {
     
     @ViewBuilder fileprivate var cameraView: some View {
         if #available(iOS 14.0, *) {
-            CameraView(uiImage: $uiImage, sourceType: .camera, completion: { completion() })
+            CameraView(uiImage: $uiImage, sourceType: .camera, onDismiss: { onDismiss?() })
                 .ignoresSafeArea()
         } else {
             // Fallback on earlier versions
-            CameraView(uiImage: $uiImage, sourceType: .camera, completion: { completion() })
+            CameraView(uiImage: $uiImage, sourceType: .camera, onDismiss: { onDismiss?() })
                 .edgesIgnoringSafeArea(.all)
         }
     }

@@ -12,11 +12,11 @@ import PhotosUI
 public struct PHImagePicker: UIViewControllerRepresentable {
     @Environment(\.presentationMode) var presentationMode
     @Binding var uiImage: UIImage?
-    var completion: ()->()
+    var onDismiss: (()->Void)?
     
-    public init(uiImage: Binding<UIImage?>, completion: @escaping () -> Void) {
+    public init(uiImage: Binding<UIImage?>, onDismiss: (()->Void)? = nil) {
         _uiImage = uiImage
-        self.completion = completion
+        self.onDismiss = onDismiss
     }
     
     public func makeUIViewController(context: Context) -> PHPickerViewController {
@@ -56,7 +56,7 @@ public struct PHImagePicker: UIViewControllerRepresentable {
                     }
                 }
             }
-            self.parent.completion()
+            self.parent.onDismiss?()
             self.parent.presentationMode.wrappedValue.dismiss()
         }
     }
